@@ -25,7 +25,7 @@
 		<c:out value="even"></c:out>
 	</c:if>
 	
-	<c:if test="${num%2 != 0}">
+	<c:if test="${num%2 == 1}">
 		<c:out value="odd"></c:out>
 	</c:if>
 </body>
