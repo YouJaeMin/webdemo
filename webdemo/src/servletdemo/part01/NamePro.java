@@ -14,13 +14,12 @@ public class NamePro extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		req.setCharacterEncoding("UTF-8");
+//		req.setCharacterEncoding("UTF-8");
 		
 		String fname = req.getParameter("fname");
-		System.out.println(fname);
-		RequestDispatcher dis = req.getRequestDispatcher("/servletview/part01/namePro.jsp");
 		req.setAttribute("fname", fname);
 		
+		RequestDispatcher dis = req.getRequestDispatcher("/servletview/part01/namePro.jsp");
 		dis.forward(req, resp);
 	}
 	
