@@ -16,10 +16,10 @@ import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter(
-        urlPatterns = "/*",
-        initParams = @WebInitParam(name = "test-param", value = "doc;xls;zip;txt;")        
-)
+//@WebFilter(
+//        urlPatterns = "/*",
+//        initParams = @WebInitParam(name = "test-param", value = "doc;xls;zip;txt;")        
+//)
 public class LogFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)

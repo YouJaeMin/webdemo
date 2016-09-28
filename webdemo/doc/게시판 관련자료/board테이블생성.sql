@@ -21,9 +21,15 @@ create table board(
 
 create sequence board_seq start with 1 increment by 1;
 
+drop sequence board_seq;
+
 insert into board 
 values(board_seq.nextval, '홍길동','young@aaaa.com','제목1','1111',sysdate,0,board_seq.nextval,
 0,0,'내용 테스트.......','127.0.0.1','sample.txt')
+
+select * from board;
+
+select num, ref, re_step, re_level from board order by num;
 
 select b.* from 
 (select rownum as rm, a.* from(
@@ -44,8 +50,10 @@ select count(*) from board where subject like '%w%'
 select count(*) from board where writer like '%3%'
 
 
-
-
+select b.*
+from(select rownum as rm, a.*
+from(select * from board order by ref desc, re_step asc)a)b
+where b.rm >=1 and b.rm <= 5
 
 
 
