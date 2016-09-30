@@ -15,11 +15,10 @@ import guestdemo.dto.BoardDTO;
 
 public class WriteAction {
 
-	public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public MultipartRequest execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		MultipartRequest multi = null;
 
-		// String saveDirectory = "c:/temp/";
 		String saveDirectory = req.getRealPath("/");
 		File file = new File(saveDirectory + "/temp");
 		if (!file.exists()) {
@@ -52,5 +51,7 @@ public class WriteAction {
 		}
 
 		dao.insertMethod(dto);
+		
+		return multi;
 	}
 }

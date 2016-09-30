@@ -52,11 +52,32 @@ public class BoardDAO {
 		}
 	}// end end()
 
-	public int rowTotalCount() {
+	public void deleteMethod(int num) {
+		try {
+			conn = start();
+			String sql = "delete from board where num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			stop();
+		}
+
+	}// end deleteMethod()
+
+	public int rowTotalCount(HashMap<String, String> map) {
 		int cnt = -1;
 		try {
 			conn = start();
 			String sql = "select count(*) from board";
+
+			if (map.get("searchKey") != null) {
+				if (map.get("searchKey").equals("subject") || map.get("searchKey").equals("writer")) {
+					sql += " where " + map.get("searchKey") + " like '%" + map.get("searchWord") + "%'";
+				}
+			}
 
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -83,7 +104,13 @@ public class BoardDAO {
 			 * String sql =
 			 * "select * from board order by ref desc, re_step asc";
 			 */
-			String sql = "select b.* from(select rownum as rm, a.* from(select * from board order by ref desc, re_step asc)a)b where b.rm >=? and b.rm <= ?";
+			String sql = "select b.* from(select rownum as rm, a.* from(select * from board";
+			if (pdto.getSearchKey() != null) {
+				if (pdto.getSearchKey().equals("subject") || pdto.getSearchKey().equals("writer")) {
+					sql += " where " + pdto.getSearchKey() + " like '%" + pdto.getSearchWord() + "%'";
+				}
+			}
+			sql += " order by ref desc, re_step asc)a)b where b.rm >=? and b.rm <= ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pdto.getStartRow());
@@ -142,6 +169,61 @@ public class BoardDAO {
 
 		return dto;
 	}// end viewMethod()
+
+	public void updateMethod(BoardDTO dto) {
+
+		try {
+			conn = start();
+			String sql = "";
+
+			// if (dto.getUpload() != null) {
+			sql = "update board set subject=?, email=?, content=?, upload=? where num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getSubject());
+			pstmt.setString(2, dto.getEmail());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getUpload());
+			pstmt.setInt(5, dto.getNum());
+			// } else {
+			// sql = "update board set subject=?, email=?, content=? where
+			// num=?";
+			// pstmt = conn.prepareStatement(sql);
+			// pstmt.setString(1, dto.getSubject());
+			// pstmt.setString(2, dto.getEmail());
+			// pstmt.setString(3, dto.getContent());
+			// pstmt.setInt(4, dto.getNum());
+			// }
+			pstmt.executeUpdate();
+
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			stop();
+		}
+
+	}
+
+	public String fileMethod(int num) {
+		String file = null;
+		try {
+			conn = start();
+			String sql = "select upload from board where num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				
+				file = rs.getString("upload");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			stop();
+		}
+		return file;
+	}
 
 	public void readCountMethod(int num) {
 		try {

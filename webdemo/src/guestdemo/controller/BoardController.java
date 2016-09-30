@@ -9,7 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import guestdemo.action.DeleteAction;
+import guestdemo.action.FileDownLoadAction;
 import guestdemo.action.ListAction;
+import guestdemo.action.UpdateFormAction;
+import guestdemo.action.UpdateProAction;
 import guestdemo.action.ViewAction;
 import guestdemo.action.WriteAction;
 
@@ -42,8 +48,26 @@ public class BoardController extends HttpServlet {
 			view.execute(req, resp);
 		} else if (action.equals("/write.do")) {
 			WriteAction write = new WriteAction();
-			write.execute(req, resp);
-			resp.sendRedirect("list.do");
+			MultipartRequest multi = write.execute(req, resp);
+			String url = "?pageNum=" + multi.getParameter("pageNum");
+			// +"&searchKey="+multi.getParameter("searchKey")+"&searchWord="+multi.getParameter("searchWord");
+			resp.sendRedirect("list.do" + url);
+		} else if (action.equals("/updateForm.do")) {
+			path = "/guestview/update.jsp?pageNum=" + req.getParameter("pageNum");
+			UpdateFormAction update = new UpdateFormAction();
+			update.execute(req, resp);
+		} else if (action.equals("/updatePro.do")) {
+			UpdateProAction updatepro = new UpdateProAction();
+			MultipartRequest multi = updatepro.execute(req);
+			String url = "?pageNum=" + multi.getParameter("pageNum");
+			resp.sendRedirect("list.do" + url);
+		} else if (action.equals("/download.do")) {
+			FileDownLoadAction download = new FileDownLoadAction();
+			download.execute(req, resp);
+		} else if (action.equals("/delete.do")) {
+			DeleteAction del = new DeleteAction();
+			del.execute(req, resp);
+			resp.sendRedirect("list.do?pageNum=" + req.getParameter("pageNum"));
 		}
 
 		if (!path.equals("")) {

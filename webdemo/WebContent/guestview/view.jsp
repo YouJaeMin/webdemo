@@ -15,7 +15,18 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+
+		// pageNum=${pdto.currentPage}&searchKey=${pdto.searchKey}&searchWord=${pdto.searchWord}
+
 		$('.list').bind('click', function() {
+
+			// 			var obj = new Object();
+			// 			obj.pageNum = "${param.pageNum}";
+			// 			obj.searchKey = "${param.searchKey}";
+			// 			obj.searchWord = "${param.searchWord}";
+			// 			$('form').attr('action', 'list.do?' + $.param(obj));
+			// $('form').attr('action', 'list.do?pageNum=${param.pageNum}&searchKey=${param.searchKey}&searchWord=${param.searchWord}');
+
 			$('form').attr('action', 'list.do');
 			$('form').submit();
 		});
@@ -45,7 +56,7 @@
 		pageContext.setAttribute("crcn", "\r\n"); //Space, Enter
 		pageContext.setAttribute("br", "<br/>"); //br 태그
 	%>
-	
+
 	<table border="1" width="80%">
 		<tr>
 			<td width="20%">글쓴이</td>
@@ -66,10 +77,8 @@
 
 		<tr>
 			<td>내용</td>
-			
-			<td colspan="3">
-			${dto.content }
-			</td>
+
+			<td colspan="3">${dto.content }</td>
 		</tr>
 
 		<tr>
@@ -79,15 +88,18 @@
 		</tr>
 	</table>
 
-	<form name="frm" method="post" enctype="application/x-www-form-urlencoded">
+	<form name="frm" method="post"
+		enctype="application/x-www-form-urlencoded">
 		<input type="hidden" value="${dto.num}" name="num" /> <input
 			type="hidden" value="${dto.ref}" name="ref" /> <input type="hidden"
 			value="${dto.re_step}" name="re_step" /> <input type="hidden"
 			value="${dto.re_level}" name="re_level" /> <input type="hidden"
-			value="${param.pageNum}" name="pageNum" /> <input type="button"
-			value="목록" class="list" /> <input type="button" value="답변"
-			class="reply" /> <input type="button" value="수정" class="update" /> <input
-			type="button" value="삭제" class="del" />
+			value="${param.pageNum}" name="pageNum" /> <input type="hidden"
+			value="${param.searchKey}" name="searchKey" /> <input type="hidden"
+			value="${param.searchWord}" name="searchWord" /> <input
+			type="button" value="목록" class="list" /> <input type="button"
+			value="답변" class="reply" /> <input type="button" value="수정"
+			class="update" /> <input type="button" value="삭제" class="del" />
 	</form>
 </body>
 </html>

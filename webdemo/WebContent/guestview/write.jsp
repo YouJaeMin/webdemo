@@ -37,14 +37,15 @@
 
 	<form name="frm" method="post" action="write.do"
 		enctype="multipart/form-data" onsubmit="return process()">
-
+		<input type="hidden" value="${param.pageNum}" name="pageNum" />
 		<!-- 답변글이면 -->
 		<c:if test="${!empty param.num}">
 			<input type="hidden" value="${param.num}" name="num" />
 			<input type="hidden" value="${param.ref}" name="ref" />
 			<input type="hidden" value="${param.re_step}" name="re_step" />
 			<input type="hidden" value="${param.re_level}" name="re_level" />
-			<input type="hidden" value="${param.pageNum}" name="pageNum" />
+			<input type="hidden" value="${param.searchKey}" name="searchKey" />
+			<input type="hidden" value="${param.searchWord}" name="searchWord" />
 		</c:if>
 
 		<table>
