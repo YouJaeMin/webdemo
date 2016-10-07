@@ -10,6 +10,20 @@ OPM(Object RelationShip Mapping) - 자바와 오라클을 연결시킨다
 3) hibenate
 
 
+spring.io
 
+jdk
+eclipse
+sts
+
+
+Aparch - server
+Aparch Tomcat - server + container
+Tomcat - container(servlet, jsp)
+
+STS(이클립스 + sts + maven)
+
+http://mvnrepository.org/
+추가할땐 밑에
 
 
